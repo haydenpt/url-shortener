@@ -7,7 +7,7 @@ services:
     environment:
       MONGODB_INITDB_ROOT_USERNAME: ${MONGODB_ROOT_USERNAME}
       MONGODB_INITDB_ROOT_PASSWORD: ${MONGODB_ROOT_PASSWORD}
-      MONGO_INITDB_DATABASE: appdb
+      MONGO_INITDB_DATABASE: ${MONGODB_DB}
     volumes:
       - mongodb-data:/data/db
       - ./init-scripts/mongodb/init-mongodb.js:/docker-entrypoint-initdb.d/init-mongodb.js:ro
