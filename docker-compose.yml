@@ -1,0 +1,38 @@
+services:
+  mongodb:
+    image: mongodb/mongodb-community-server:latest
+    container_name: mongodb
+    ports:
+      - 27017:27017
+    environment:
+      MONGODB_INITDB_ROOT_USERNAME: mongo_root
+      MONGODB_INITDB_ROOT_PASSWORD: mongo_root_password
+      MONGO_INITDB_DATABASE: appdb
+    volumes:
+      - mongodb-data:/data/db
+      - ./init-scripts/mongodb/init-mongodb.js:/docker-entrypoint-initdb.d/init-mongodb.js:ro
+
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_DB: url_shortener
+      POSTGRES_USER: pguser
+      POSTGRES_PASSWORD: pgpassword
+    volumes:
+      - ./init-scripts/postgres/init-postgres.sql:/docker-entrypoint-initdb.d/init-postgres.sql:ro
+      - postgres-data:/var/lib/postgresql/data
+
+#  kafkamq:
+#    image: apache/kafka:latest
+#    container_name: kafkamq
+#    ports:
+#        - 9092:9092
+#    environment:
+
+
+volumes:
+  mongodb-data:
+  postgres-data:
