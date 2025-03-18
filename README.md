@@ -52,3 +52,9 @@
 
 
 # 4. Database Design
+  - ...
+  - ...
+
+
+### References:
+https://medium.com/javarevisited/day-1-high-level-system-design-series-url-shortening-d28888d71084

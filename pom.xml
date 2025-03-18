@@ -11,21 +11,13 @@
 	<groupId>org.interstellar</groupId>
 	<artifactId>urlshortener</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>urlshortener</name>
-	<description>urlshortener</description>
-	<url/>
-	<licenses>
-		<license/>
-	</licenses>
+	<name>url-shortener</name>
+	<description>url-shortener</description>
 	<developers>
-		<developer/>
+		<developer>
+			<name>Mercurious</name>
+		</developer>
 	</developers>
-	<scm>
-		<connection/>
-		<developerConnection/>
-		<tag/>
-		<url/>
-	</scm>
 	<properties>
 		<java.version>23</java.version>
 	</properties>
@@ -36,30 +28,38 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<optional>true</optional>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-	</dependencies>
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-mongodb</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<scope>provided</scope>
+		</dependency>
+    </dependencies>
 
 	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<annotationProcessorPaths>
-						<path>
-							<groupId>org.projectlombok</groupId>
-							<artifactId>lombok</artifactId>
-						</path>
-					</annotationProcessorPaths>
-				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
