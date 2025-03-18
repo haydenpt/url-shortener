@@ -1,9 +1,10 @@
-package org.interstellar.urlshortener.service;
+package org.interstellar.urlshortener.service.url;
 
 import org.interstellar.urlshortener.dto.UrlShortenerRequest;
 import org.interstellar.urlshortener.dto.UrlShortenerResponse;
 import org.interstellar.urlshortener.factory.URLShortenerStrategyFactory;
 import org.interstellar.urlshortener.impl.UrlShortenerStrategy;
+import org.interstellar.urlshortener.service.message.KafkaProducer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -14,10 +15,12 @@ public class UrlShortenerService {
 
     private final URLShortenerStrategyFactory strategyFactory;
     private final UrlMappingEntityService urlMappingEntityService;
+    private final KafkaProducer kafkaProducer;
 
-    public UrlShortenerService(URLShortenerStrategyFactory strategyFactory, UrlMappingEntityService urlMappingEntityService) {
+    public UrlShortenerService(URLShortenerStrategyFactory strategyFactory, UrlMappingEntityService urlMappingEntityService, KafkaProducer kafkaProducer) {
         this.strategyFactory = strategyFactory;
         this.urlMappingEntityService = urlMappingEntityService;
+        this.kafkaProducer = kafkaProducer;
     }
 
     public UrlShortenerResponse performShortenProcess(UrlShortenerRequest request) {
@@ -37,7 +40,8 @@ public class UrlShortenerService {
             response.setSuccess(true);
             response.setShortUrl(shortUrl);
             response.setMessage("Success");
-            // TODO: Add more logic
+
+            this.kafkaProducer.sendMessage("url_shortened_topic", shortUrl);
         }
         return response;
     }

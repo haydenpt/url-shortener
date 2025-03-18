@@ -2,7 +2,7 @@ package org.interstellar.urlshortener.controller;
 
 import org.interstellar.urlshortener.dto.UrlShortenerRequest;
 import org.interstellar.urlshortener.dto.UrlShortenerResponse;
-import org.interstellar.urlshortener.service.UrlShortenerService;
+import org.interstellar.urlshortener.service.url.UrlShortenerService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;

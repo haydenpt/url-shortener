@@ -1,4 +1,4 @@
-package org.interstellar.urlshortener.service;
+package org.interstellar.urlshortener.service.url;
 
 import org.interstellar.urlshortener.dao.UrlMappingEntityRepository;
 import org.interstellar.urlshortener.entity.UrlShortenerEntity;
