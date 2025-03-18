@@ -1,5 +1,6 @@
 package org.interstellar.urlshortener.service.url;
 
+import org.interstellar.urlshortener.dto.UrlShortenerMessage;
 import org.interstellar.urlshortener.dto.UrlShortenerRequest;
 import org.interstellar.urlshortener.dto.UrlShortenerResponse;
 import org.interstellar.urlshortener.factory.URLShortenerStrategyFactory;
@@ -41,7 +42,14 @@ public class UrlShortenerService {
             response.setShortUrl(shortUrl);
             response.setMessage("Success");
 
-            this.kafkaProducer.sendMessage("url_shortened_topic", shortUrl);
+            UrlShortenerMessage message = new UrlShortenerMessage();
+            message.setOriginalUrl(request.getOriginalUrl());
+            message.setShortUrl(shortUrl);
+            message.setUserId(request.getUser().getUserId());
+            message.setStrategy(request.getStrategy());
+            message.setEventType("CREATE");
+
+            this.kafkaProducer.sendMessage("url_shortened_topic", message);
         }
         return response;
     }
