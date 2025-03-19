@@ -26,16 +26,16 @@ public class UrlShortenerService {
 
     public UrlShortenerResponse performShortenProcess(UrlShortenerRequest request) {
         UrlShortenerResponse response = new UrlShortenerResponse();
-
-        String shortUrl = shortenUrl(request.getOriginalUrl(), request.getStrategy());
+        UrlShortenerStrategy urlShortener = this.strategyFactory.createStrategy(strategy);
 
         int attempts = 0;
-        boolean saveSuccessful = saveUrl(shortUrl, request.getOriginalUrl());
-        while (!saveSuccessful && attempts < 5) {
-            shortUrl = shortenUrl(request.getOriginalUrl(), request.getStrategy());
+        boolean saveSuccessful;
+        do {
+            shortUrl = urlShortener.shorten(request.getOriginalUrl());
             saveSuccessful = saveUrl(shortUrl, request.getOriginalUrl());
             attempts++;
-        }
+        } while (!saveSuccessful && attempts < 2);
+        
 
         if (saveSuccessful) {
             response.setSuccess(true);
@@ -52,11 +52,6 @@ public class UrlShortenerService {
             this.kafkaProducer.sendMessage("url_shortened_topic", message);
         }
         return response;
-    }
-
-    private String shortenUrl(String originalUrl, String strategy) {
-        UrlShortenerStrategy urlShortener = this.strategyFactory.createStrategy(strategy);
-        return urlShortener.shorten(originalUrl);
     }
 
     private boolean saveUrl(String shortUrl, String originalUrl) {
