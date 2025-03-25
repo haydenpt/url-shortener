@@ -26,13 +26,14 @@ public class UrlShortenerService {
 
     public UrlShortenerResponse performShortenProcess(UrlShortenerRequest request) {
         UrlShortenerResponse response = new UrlShortenerResponse();
-        UrlShortenerStrategy urlShortener = this.strategyFactory.createStrategy(strategy);
+        UrlShortenerStrategy urlShortener = this.strategyFactory.createStrategy(request.getStrategy());
+        String shortUrl;
 
         int attempts = 0;
         boolean saveSuccessful;
         do {
             shortUrl = urlShortener.shorten(request.getOriginalUrl());
-            saveSuccessful = saveUrl(shortUrl, request.getOriginalUrl());
+            saveSuccessful = this.saveUrl(shortUrl, request.getOriginalUrl());
             attempts++;
         } while (!saveSuccessful && attempts < 2);
         
