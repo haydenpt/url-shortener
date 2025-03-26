@@ -50,7 +50,7 @@ public class UrlShortenerService {
             message.setStrategy(request.getStrategy());
             message.setEventType("CREATE");
 
-            this.kafkaProducer.sendMessage("url_shortened_topic", message);
+            this.kafkaProducer.sendMessage("url_event", message);
         }
         return response;
     }

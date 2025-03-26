@@ -29,7 +29,7 @@ public class UrlRetrievalService {
             message.setShortUrl(shortUrl);
             message.setOriginalUrl(url);
             message.setEventType("RETRIEVE");
-            this.kafkaProducer.sendMessage("url_shortened_topic", message);
+            this.kafkaProducer.sendMessage("url_event", message);
         }
         else {
             url = domain + NOT_FOUND;
